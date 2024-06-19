@@ -26,6 +26,11 @@ app.get(shopify.config.auth.path, shopify.auth.begin());
 app.get(
   shopify.config.auth.callbackPath,
   shopify.auth.callback(),
+  (req, res, next) => {
+    const host = req.query.host;
+    const shop = req.query.shop;
+    res.redirect(`/?shop=${shop}&host=${host}`);
+  },
   shopify.redirectToShopifyOrAppRoot()
 );
 app.post(
@@ -170,8 +175,9 @@ app.get("/api/products/create", async (_req, res) => {
 app.use(shopify.cspHeaders());
 app.use(serveStatic(STATIC_PATH, { index: false }));
 
-app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
-  return res
+app.use("/*", shopify.ensureInstalledOnShop(), async (req, res, next) => {
+  const host = req.query.host;
+  res
     .status(200)
     .set("Content-Type", "text/html")
     .send(readFileSync(join(STATIC_PATH, "index.html")));
