@@ -1,0 +1,29 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "3ceaa82ae1f494763022af72954f22f8"
+name = "Videoit-App"
+application_url = "https://shopify-app-store.vercel.app/"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "umang-store1.myshopify.com"
+include_config_on_deploy = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_orders,read_products,write_products"
+
+[auth]
+redirect_urls = [
+  "https://shopify-app-store.vercel.app/auth/callback",
+  "https://shopify-app-store.vercel.app/auth/shopify/callback",
+  "https://shopify-app-store.vercel.app/api/auth/callback",
+  "https://shopify-app-store.vercel.app/.shopify/graphiql/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-04"
+
+[pos]
+embedded = false
